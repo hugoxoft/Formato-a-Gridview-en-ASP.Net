@@ -1,0 +1,24 @@
+body {
+    background-color: #D2DAFF;
+}
+.titulo {
+    background-color: #AAC4FF;
+}
+.titulo_letras{
+    color: white;
+}
+.templateTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+.templateTable td {
+    border: solid 1px #cccccc;
+    padding: 6px;
+}
+.templateTable td.value {
+    font-weight: bold;
+}
+.img-cover {
+    object-fit: cover;
+    object-position: center;
+}
