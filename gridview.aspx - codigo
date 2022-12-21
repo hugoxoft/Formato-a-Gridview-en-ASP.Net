@@ -1,0 +1,29 @@
+Imports System.Data.SqlClient
+Public Class gridview
+    Inherits System.Web.UI.Page
+    Private Cnn As New SqlConnection(System.Web.Configuration.WebConfigurationManager.AppSettings("Conecta").ToString)
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        directorio()
+    End Sub
+    Private Sub directorio()
+        Dim cQuery As String = "SELECT int_numemp,str_nombre,str_paterno,str_materno,str_puesto,str_area," +
+        "str_ext,str_email,str_foto FROM empleados ORDER BY str_nombre"
+        Using cmd As New SqlCommand(cQuery, Cnn)
+            Using sd As New SqlDataAdapter(cmd)
+                cmd.CommandType = CommandType.Text
+                Dim dt As New DataTable()
+                sd.Fill(dt)
+                gridview1.DataSource = dt
+                gridview1.DataBind()
+            End Using
+        End Using
+    End Sub
+    Protected Sub GridView_directorio_PageIndexChanging(ByVal sender As Object, ByVal e As GridViewPageEventArgs) Handles gridview1.PageIndexChanging
+        Me.gridview1.PageIndex = e.NewPageIndex
+        Try
+            directorio()
+        Catch err As Exception
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "alertMessage", "alert('Atención','" & err.Message & "','error')", True)
+        End Try
+    End Sub
+End Class
